@@ -1,10 +1,11 @@
 use bevy::input::mouse::MouseMotion;
+use bevy::app::ManualEventReader;
 use bevy::prelude::*;
 
 /// Keeps track of mouse motion events, pitch, and yaw
 #[derive(Default)]
 struct InputState {
-    reader_motion: EventReader<MouseMotion>,
+    reader_motion: ManualEventReader<MouseMotion>,
     pitch: f32,
     yaw: f32,
 }
@@ -38,10 +39,10 @@ fn initial_grab_cursor(mut windows: ResMut<Windows>) {
     toggle_grab_cursor(windows.get_primary_mut().unwrap());
 }
 
-/// Spawns the `Camera3dBundle` to be controlled
+/// Spawns the `PerspectiveCameraBundle` to be controlled
 fn setup_player(commands: &mut Commands) {
     commands
-        .spawn(Camera3dBundle {
+        .spawn(PerspectiveCameraBundle {
             transform: Transform::from_translation(Vec3::new(0., 2., 0.)),
             ..Default::default()
         })
@@ -85,7 +86,7 @@ fn player_move(
 }
 
 /// Handles looking around if cursor is locked
-fn player_look(
+fn player_look<'a>(
     settings: Res<MovementSettings>,
     windows: Res<Windows>,
     mut state: ResMut<InputState>,
