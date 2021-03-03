@@ -40,7 +40,7 @@ fn initial_grab_cursor(mut windows: ResMut<Windows>) {
 }
 
 /// Spawns the `PerspectiveCameraBundle` to be controlled
-fn setup_player(commands: &mut Commands) {
+fn setup_player(mut commands: Commands) {
     commands
         .spawn(PerspectiveCameraBundle {
             transform: Transform::from_translation(Vec3::new(0., 2., 0.)),
