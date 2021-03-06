@@ -86,7 +86,7 @@ fn player_move(
 }
 
 /// Handles looking around if cursor is locked
-fn player_look<'a>(
+fn player_look(
     settings: Res<MovementSettings>,
     windows: Res<Windows>,
     mut state: ResMut<InputState>,
