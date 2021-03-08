@@ -1,5 +1,5 @@
 use bevy::input::mouse::MouseMotion;
-use bevy::app::ManualEventReader;
+use bevy::app::{Events, ManualEventReader};
 use bevy::prelude::*;
 
 /// Keeps track of mouse motion events, pitch, and yaw
@@ -59,7 +59,7 @@ fn player_move(
 ) {
     let window = windows.get_primary().unwrap();
     for (_camera, mut transform) in query.iter_mut() {
-        let mut velocity = Vec3::zero();
+        let mut velocity = Vec3::ZERO;
         let forward = -Vec3::new(transform.local_z().x, 0., transform.local_z().z);
         let right = Vec3::new(transform.local_z().z, 0., -transform.local_z().x);
 
@@ -70,8 +70,8 @@ fn player_move(
                     KeyCode::S => velocity -= forward,
                     KeyCode::A => velocity -= right,
                     KeyCode::D => velocity += right,
-                    KeyCode::Space => velocity += Vec3::unit_y(),
-                    KeyCode::LShift => velocity -= Vec3::unit_y(),
+                    KeyCode::Space => velocity += Vec3::Y,
+                    KeyCode::LShift => velocity -= Vec3::Y,
                     _ => (),
                 }
             }
@@ -104,8 +104,8 @@ fn player_look(
             state.pitch = state.pitch.clamp(-1.54, 1.54);
 
             // Order is important to prevent unintended roll
-            transform.rotation = Quat::from_axis_angle(Vec3::unit_y(), state.yaw)
-                * Quat::from_axis_angle(Vec3::unit_x(), state.pitch);
+            transform.rotation = Quat::from_axis_angle(Vec3::Y, state.yaw)
+                * Quat::from_axis_angle(Vec3::X, state.pitch);
         }
     }
 }
