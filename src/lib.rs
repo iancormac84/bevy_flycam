@@ -42,11 +42,11 @@ fn initial_grab_cursor(mut windows: ResMut<Windows>) {
 /// Spawns the `PerspectiveCameraBundle` to be controlled
 fn setup_player(mut commands: Commands) {
     commands
-        .spawn(PerspectiveCameraBundle {
+        .spawn_bundle(PerspectiveCameraBundle {
             transform: Transform::from_translation(Vec3::new(0., 2., 0.)),
             ..Default::default()
         })
-        .with(FlyCam);
+        .insert(FlyCam);
 }
 
 /// Handles keyboard input and movement
